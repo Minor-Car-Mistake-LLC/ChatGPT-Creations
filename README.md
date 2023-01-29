@@ -1,4 +1,2 @@
 # ChatGPT-Creations
-Programs made with Openai's ChatGPT
-
-[support server](https://discohook.app/discord)
+Programs made with [Openai's ChatGPT](chat.openai.com)
