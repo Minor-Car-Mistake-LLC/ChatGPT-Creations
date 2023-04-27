@@ -1,0 +1,45 @@
+⎕IO←0
+
+{⍝ Initialize the game
+    ⍺←10⍴10⍴0 ⍝ Game board (10x10 grid)
+    ⍵←(2 2)(2 3)(2 4) ⍝ Initial snake position
+    ⍺[⍵]←1
+    ⍺@(⊃?⍨≢⍺~⍵)⊢2
+    (⍺ ⍵) ⍝ Return the game board and snake position
+} ↓ {⍝ Update the game state
+    (board snake)←⍺
+    head←⊃snake ⍝ Current snake head position
+    ⍝ Update snake direction based on user input
+    dir←(⊂head),⍨head-⍨⊃(-1 1∘.×∘¯2 2)⌷⍵
+    snake←1↓dir,(snake,head)
+    tail←1↓snake
+    ⍝ Check if the snake hits a wall or itself
+    ((head∊board)∧0=board[head])∨head∊tail: ⊃⌽⍵
+    ⍝ Update board with new snake position
+    board←(board,0)@(head⊢1)(tail⊢0)
+    ⍝ Check if the snake eats food
+    head∊⍵: ⍺ ↓ (⊃?⍨≢⍺~snake,⍵)⊢snake
+    (board snake) ↓ ⍵
+}
+
+{⍝ Draw the game board
+    board←⍵
+    (h w)←⍴board
+    board←board/⊂'O'
+    board←((h-1)⍴⊂'¯'),board,((h-1)⍴⊂'¯')
+    board←(('|',(w-2)⍴⊂' '),'|')∘,board∘,('|',(w-2)⍴⊂' '),'|'
+    board
+} ⊣ {⍝ Main game loop
+    (board snake)←⍺
+    food←?⍨≢board~1⌷¨,snake ⍝ Generate food position
+    board[food]←'*' ⍝ Draw food
+    draw←{⍞←⍺} ⍝ Helper function for drawing
+    draw {⍺}⌸,↓⍉board ⍝ Draw initial board
+    ⍝ Game loop
+    dir←2
+    {draw {⍺}⌸,↓⍉board ⍝ Redraw board
+     ⍝ Wait for user input
+     dir←((1 0 0)(0 1 2)(0 3 4)(0 0 5))[(⍞∊'wasd')+/⍳5]⌷dir
+     (board snake)←board snake gamestate dir
+    }⍣{0=⊃⌽⍺} ⊢ (board snake)
+} 10 10⊣10 9 9 9 8⊣0
