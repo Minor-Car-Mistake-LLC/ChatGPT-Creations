@@ -1,0 +1,24 @@
+∇forces←computeForces(v,α,ρ,S,Cd0,Cdα,Cla,Clmax)
+⍝ Compute lift and drag forces on an aircraft
+⍝ Inputs:
+⍝  v: velocity (m/s)
+⍝  α: angle of attack (rad)
+⍝  ρ: air density (kg/m^3)
+⍝  S: wing area (m^2)
+⍝  Cd0: zero-lift drag coefficient
+⍝  Cdα: drag coefficient slope
+⍝  Cla: lift coefficient slope
+⍝  Clmax: maximum lift coefficient
+⍝ Outputs:
+⍝  forces[1]: lift force (N)
+⍝  forces[2]: drag force (N)
+⍝
+⍝ Compute lift and drag coefficients
+Cl←Cla×α
+Cl←Cl×⍨(1+⍣(Clmax÷Cla))⌊Cl÷Clmax
+Cd←Cd0+Cdα×Cl×Cl
+⍝ Compute forces
+L←0.5×ρ×S×v×v×Cl
+D←0.5×ρ×S×v×v×Cd
+forces←L D
+∇
