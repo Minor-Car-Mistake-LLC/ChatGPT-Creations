@@ -1,5 +1,5 @@
 // THIS SCRIPT WILL BSOD YOUR PC
-// Made by [Google's Bard](https://bard.google.com/)
+// Made by Google's Bard
 
 #include <windows.h>
 
