@@ -1,0 +1,59 @@
+# Pong game in Dolittle
+
+# Create the turtles
+ボール = タートル！作る。
+左パドル = タートル！作る。
+右パドル = タートル！作る。
+
+# Set the starting positions
+ボール！x座標 = 0
+ボール！y座標 = 0
+左パドル！x座標 = -200
+右パドル！x座標 = 200
+
+# Set the initial directions
+x方向 = 5
+y方向 = 5
+
+# Create the game loop
+時計 = タイマー！作る　0.1秒　間隔　無限。
+時計！動作 = 「
+    # Move the ball
+    ボール！歩く(x方向, y方向)
+
+    # Check for collision with the paddles
+    if ボール！距離(左パドル) < 50:
+        x方向 = abs(x方向)
+    elif ボール！距離(右パドル) < 50:
+        x方向 = -abs(x方向)
+
+    # Check for collision with the walls
+    if abs(ボール！x座標) > 300:
+        x方向 = -x方向
+    if abs(ボール！y座標) > 200:
+        y方向 = -y方向
+
+    # Move the paddles with the buttons
+    if 左ボタン！押された:
+        左パドル！y座標 = 左パドル！y座標 + 20
+    if 右ボタン！押された:
+        右パドル！y座標 = 右パドル！y座標 + 20
+」実行。
+
+# Create the buttons
+左ボタン = ボタン！作る。
+左ボタン！ラベル = "上"
+左ボタン！x座標 = -250
+左ボタン！y座標 = -200
+
+右ボタン = ボタン！作る。
+右ボタン！ラベル = "下"
+右ボタン！x座標 = 250
+右ボタン！y座標 = -200
+
+# Set the paddle colors
+左パドル！色 = "red"
+右パドル！色 = "blue"
+
+# Start the game loop
+時計！実行。
